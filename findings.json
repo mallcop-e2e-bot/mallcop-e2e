@@ -1,1 +1,32 @@
-[{"id": "finding-evt_6af2a8bbb036", "source": "detector:new-actor", "severity": "medium", "type": "new-actor", "actor": "[USER_DATA_BEGIN]baron-3dl[USER_DATA_END]", "timestamp": "2025-11-29T05:52:59.57Z", "reason": "actor \"[USER_DATA_BEGIN]baron-3dl[USER_DATA_END]\" not seen in baseline period (source: github)", "evidence": {"actor": "[USER_DATA_BEGIN]baron-3dl[USER_DATA_END]", "event_id": "evt_6af2a8bbb036", "event_type": "", "source": "github"}}, {"id": "finding-evt_559fc3f3ce2c", "source": "detector:new-actor", "severity": "medium", "type": "new-actor", "actor": "[USER_DATA_BEGIN]cmbaron[USER_DATA_END]", "timestamp": "2025-11-29T05:50:49.208Z", "reason": "actor \"[USER_DATA_BEGIN]cmbaron[USER_DATA_END]\" not seen in baseline period (source: github)", "evidence": {"actor": "[USER_DATA_BEGIN]cmbaron[USER_DATA_END]", "event_id": "evt_559fc3f3ce2c", "event_type": "", "source": "github"}}, {"id": "finding-evt_21841b99d446", "source": "detector:new-actor", "severity": "medium", "type": "new-actor", "actor": "[USER_DATA_BEGIN]ghost[USER_DATA_END]", "timestamp": "2025-11-29T05:25:04.036Z", "reason": "actor \"[USER_DATA_BEGIN]ghost[USER_DATA_END]\" not seen in baseline period (source: github)", "evidence": {"actor": "[USER_DATA_BEGIN]ghost[USER_DATA_END]", "event_id": "evt_21841b99d446", "event_type": "", "source": "github"}}, {"id": "finding-evt_749c67a15533", "source": "detector:new-actor", "severity": "medium", "type": "new-actor", "actor": "[USER_DATA_BEGIN]3dl-dev[USER_DATA_END]", "timestamp": "2025-11-29T05:25:02.581Z", "reason": "actor \"[USER_DATA_BEGIN]3dl-dev[USER_DATA_END]\" not seen in baseline period (source: github)", "evidence": {"actor": "[USER_DATA_BEGIN]3dl-dev[USER_DATA_END]", "event_id": "evt_749c67a15533", "event_type": "", "source": "github"}}, {"id": "finding-evt_a1b30964666c", "source": "detector:new-actor", "severity": "medium", "type": "new-actor", "actor": "[USER_DATA_BEGIN]unknown[USER_DATA_END]", "timestamp": "2026-02-28T18:25:31.858Z", "reason": "actor \"[USER_DATA_BEGIN]unknown[USER_DATA_END]\" not seen in baseline period (source: github)", "evidence": {"actor": "[USER_DATA_BEGIN]unknown[USER_DATA_END]", "event_id": "evt_a1b30964666c", "event_type": "", "source": "github"}}, {"id": "finding-evt_ebd6c6bb1ecf", "source": "detector:new-actor", "severity": "medium", "type": "new-actor", "actor": "[USER_DATA_BEGIN][USER_DATA_END]", "timestamp": "2026-02-25T20:11:24.593Z", "reason": "actor \"[USER_DATA_BEGIN][USER_DATA_END]\" not seen in baseline period (source: github)", "evidence": {"actor": "[USER_DATA_BEGIN][USER_DATA_END]", "event_id": "evt_ebd6c6bb1ecf", "event_type": "", "source": "github"}}, {"id": "finding-evt_5628196043f0", "source": "detector:new-actor", "severity": "medium", "type": "new-actor", "actor": "[USER_DATA_BEGIN]github-advanced-security[bot][USER_DATA_END]", "timestamp": "2026-02-14T18:36:17.063Z", "reason": "actor \"[USER_DATA_BEGIN]github-advanced-security[bot][USER_DATA_END]\" not seen in baseline period (source: github)", "evidence": {"actor": "[USER_DATA_BEGIN]github-advanced-security[bot][USER_DATA_END]", "event_id": "evt_5628196043f0", "event_type": "", "source": "github"}}, {"id": "finding-evt_10cdb091e762", "source": "detector:new-actor", "severity": "medium", "type": "new-actor", "actor": "[USER_DATA_BEGIN]jbaron404[USER_DATA_END]", "timestamp": "2026-02-14T14:12:28.446Z", "reason": "actor \"[USER_DATA_BEGIN]jbaron404[USER_DATA_END]\" not seen in baseline period (source: github)", "evidence": {"actor": "[USER_DATA_BEGIN]jbaron404[USER_DATA_END]", "event_id": "evt_10cdb091e762", "event_type": "", "source": "github"}}]
+[
+  {
+    "id": "finding-evt_0c80b2ba656f",
+    "source": "detector:new-actor",
+    "severity": "medium",
+    "type": "new-actor",
+    "actor": "github-actions[bot]",
+    "timestamp": "2026-07-09T00:17:08Z",
+    "reason": "actor \"github-actions[bot]\" not seen in baseline period (source: github)",
+    "evidence": {
+      "actor": "github-actions[bot]",
+      "event_id": "evt_0c80b2ba656f",
+      "event_type": "github_other",
+      "source": "github"
+    }
+  },
+  {
+    "id": "finding-evt_e1a9567e696b",
+    "source": "detector:new-actor",
+    "severity": "medium",
+    "type": "new-actor",
+    "actor": "baron-3dl",
+    "timestamp": "2026-07-09T00:12:55Z",
+    "reason": "actor \"baron-3dl\" not seen in baseline period (source: github)",
+    "evidence": {
+      "actor": "baron-3dl",
+      "event_id": "evt_e1a9567e696b",
+      "event_type": "push",
+      "source": "github"
+    }
+  }
+]
