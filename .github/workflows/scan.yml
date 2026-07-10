@@ -1,0 +1,147 @@
+name: mallcop scheduled scan
+
+# SKELETON (mallcoppro-f3b): checkout, install the pinned mallcop release
+# binary, build wasip1 sidecar detectors, run 'mallcop scan', persist
+# findings on the 'mallcop-findings' branch. Scan/notify/triage CONTENT
+# beyond this build+basic-scan skeleton is a separate item (977) that extends
+# this workflow.
+#
+# D2+2fd ruling: this workflow NEVER rebuilds the whole mallcop binary from
+# repo content. The core binary is always the pinned prebuilt release
+# tarball below; the only thing ever compiled from this repo is each
+# detectors/<name>/, and only to wasip1/wasm.
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+env:
+  MALLCOP_VERSION: "v0.10.1"
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout deployment repo
+        uses: actions/checkout@v4
+
+      - name: Determine pinned-release asset for this runner
+        # Maps the Actions-provided RUNNER_OS/RUNNER_ARCH to the exact asset
+        # name mallcop's release workflow publishes (see mallcop-app/mallcop's
+        # releases: mallcop-linux-amd64.tar.gz, mallcop-linux-arm64.tar.gz,
+        # mallcop-darwin-arm64.tar.gz). Never hardcodes a single arch, so this
+        # workflow keeps working if the customer ever moves scan.yml's
+        # runs-on to an arm64 or macOS runner.
+        id: platform
+        run: |
+          set -euo pipefail
+          case "${RUNNER_OS}-${RUNNER_ARCH}" in
+            Linux-X64) echo "asset=linux-amd64" >> "$GITHUB_OUTPUT" ;;
+            Linux-ARM64) echo "asset=linux-arm64" >> "$GITHUB_OUTPUT" ;;
+            macOS-ARM64) echo "asset=darwin-arm64" >> "$GITHUB_OUTPUT" ;;
+            *)
+              echo "no published mallcop release asset for ${RUNNER_OS}-${RUNNER_ARCH}" >&2
+              exit 1
+              ;;
+          esac
+
+      - name: Install pinned mallcop release binary
+        env:
+          MALLCOP_ASSET: ${{ steps.platform.outputs.asset }}
+        run: |
+          set -euo pipefail
+          curl -fsSLO "https://github.com/mallcop-app/mallcop/releases/download/${MALLCOP_VERSION}/mallcop-${MALLCOP_ASSET}.tar.gz"
+          curl -fsSLO "https://github.com/mallcop-app/mallcop/releases/download/${MALLCOP_VERSION}/mallcop-${MALLCOP_ASSET}.tar.gz.sha256"
+          sha256sum -c "mallcop-${MALLCOP_ASSET}.tar.gz.sha256"
+          tar -xzf "mallcop-${MALLCOP_ASSET}.tar.gz"
+          echo "$PWD/bin" >> "$GITHUB_PATH"
+
+      - name: Set up Go (sidecar builds only -- never the core binary)
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+
+      - name: Build wasip1 sidecar detectors
+        # GOFLAGS=-mod=mod mirrors cli/sidecars.go's
+        # buildAndRegisterSourceSidecar: this repo's go.mod pins
+        # github.com/mallcop-app/mallcop (D1 THIN-EMBED) but a customer
+        # editing detectors/ may not have re-run 'go mod tidy' after adding an
+        # import -- -mod=mod lets 'go build' complete the go.sum itself
+        # (from the module cache or GOPROXY) instead of hard-failing with
+        # "missing go.sum entry", exactly like a customer's own 'go build'
+        # would need to.
+        env:
+          GOFLAGS: -mod=mod
+        run: |
+          set -euo pipefail
+          mkdir -p detectors/bin
+          shopt -s nullglob
+          any=0
+          for d in detectors/*/; do
+            [ -f "${d}main.go" ] || continue
+            any=1
+          done
+          if [ "$any" = "1" ]; then
+            go mod tidy
+          fi
+          for d in detectors/*/; do
+            name="$(basename "$d")"
+            [ -f "${d}main.go" ] || continue
+            echo "building sidecar: ${name}"
+            GOOS=wasip1 GOARCH=wasm go build -o "detectors/bin/${name}.wasm" "./${d}"
+          done
+
+      - name: Restore findings store from previous runs
+        run: |
+          set -euo pipefail
+          rm -rf store
+          git clone --quiet --depth 1 --branch "mallcop-findings" --single-branch \
+            "https://x-access-token:${TOKEN}@github.com/${REPO}.git" store \
+            || mkdir -p store
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+
+      - name: Run mallcop scan
+        # Exit codes (see cli/main.go): 0 = no findings, 1 = findings
+        # detected (expected, NOT a workflow failure), 2 = real scan failure.
+        # MALLCOP_API_KEY is scoped to only THIS step's env (mallcoppro-c32):
+        # a job-level env would expose the inference credential to every
+        # other step in this job, including the third-party
+        # actions/setup-go@v5 action above.
+        env:
+          MALLCOP_API_KEY: ${{ secrets.MALLCOP_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_LOOKBACK: 720h
+        run: |
+          set +e
+          mallcop scan
+          code=$?
+          set -e
+          if [ "$code" != "0" ] && [ "$code" != "1" ]; then
+            exit "$code"
+          fi
+
+      - name: Push findings store
+        # 'mallcop scan' (core/store) already durably COMMITS every stream
+        # write as it runs -- this step only PUSHES whatever store/'s current
+        # HEAD is to the 'mallcop-findings' branch so it survives past this
+        # ephemeral runner. It deliberately never runs its own 'git add'/
+        # 'git commit' inside store/: that would restage the working tree,
+        # which a live proof run of this item found can be left in a
+        # deletion-staged (but uncommitted) state after 'mallcop scan' exits
+        # -- see mallcoppro-f3b's reported finding. Pushing HEAD as-is only
+        # ever ships what mallcop scan itself already committed.
+        run: |
+          set -euo pipefail
+          if [ -d store/.git ]; then
+            git -C store push --quiet \
+              "https://x-access-token:${TOKEN}@github.com/${REPO}.git" \
+              HEAD:refs/heads/mallcop-findings
+          fi
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
