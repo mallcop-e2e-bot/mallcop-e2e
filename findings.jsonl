@@ -1,0 +1,1 @@
+{"id":"finding-evt_0c80b2ba656f","source":"detector:new-actor","severity":"medium","type":"new-actor","actor":"github-actions[bot]","timestamp":"2026-07-09T00:17:08Z","reason":"actor \"github-actions[bot]\" not seen in baseline period (source: github)","evidence":{"actor":"github-actions[bot]","event_id":"evt_0c80b2ba656f","event_type":"github_other","source":"github"}}
