@@ -1,0 +1,8 @@
+version: 1
+monitor:
+  repo: mallcop-e2e-bot/mallcop-e2e
+  store_branch: mallcop-findings
+inference:
+  endpoint: https://api.mallcop.app
+  model: triage
+  baseline: ""
