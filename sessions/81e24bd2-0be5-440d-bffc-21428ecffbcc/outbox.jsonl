@@ -1,3 +1,4 @@
 {"runner":"mallcop-investigate","seq":1,"ts":"2026-07-10T17:18:12Z","type":"ready"}
 {"q":"q_f4598aba-5a6d-4872-a7fb-dbbdee1b952f","seq":2,"ts":"2026-07-10T17:18:13Z","type":"ack"}
 {"input":{"login":"ghost"},"q":"q_f4598aba-5a6d-4872-a7fb-dbbdee1b952f","seq":3,"step":1,"tool":"github_actor","type":"tool_call"}
+{"q":"q_f4598aba-5a6d-4872-a7fb-dbbdee1b952f","seq":4,"step":1,"summary":"github_actor returned 666 bytes","type":"tool_result"}
