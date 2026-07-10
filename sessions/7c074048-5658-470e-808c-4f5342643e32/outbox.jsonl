@@ -1,2 +1,3 @@
 {"runner":"mallcop-investigate","seq":1,"ts":"2026-07-10T17:15:16Z","type":"ready"}
 {"q":"q_092e8ea1-0311-4b92-b5ec-906db8c5ecd8","seq":2,"ts":"2026-07-10T17:15:17Z","type":"ack"}
+{"input":{"login":"ghost"},"q":"q_092e8ea1-0311-4b92-b5ec-906db8c5ecd8","seq":3,"step":1,"tool":"github_actor","type":"tool_call"}
