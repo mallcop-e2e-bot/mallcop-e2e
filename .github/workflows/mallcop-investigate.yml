@@ -1,0 +1,107 @@
+name: mallcop investigate (chat)
+
+# SKELETON (mallcoppro-067): checkout the deployment repo, install the pinned
+# mallcop release binary, restore the findings store, and run the
+# long-lived 'mallcop investigate --serve' session-mailbox loop for
+# inputs.session_id. See core/investigate/gitmailbox.go and mallcop-pro's
+# docs/chat-investigate-protocol.md for the full protocol this implements.
+#
+# D2+2fd ruling (shared with scan.yml): this workflow NEVER rebuilds the
+# whole mallcop binary from repo content -- the core binary run here is
+# always the pinned prebuilt release tarball below.
+on:
+  workflow_dispatch:
+    inputs:
+      session_id:
+        description: 'Chat session id -- sessions/<session_id>/ on the mallcop-chat branch'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  MALLCOP_VERSION: "v0.10.1"
+
+jobs:
+  investigate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout deployment repo
+        # fetch-depth 1 (shallow): a FULL-history checkout (fetch-depth 0)
+        # HANGS on real deploy repos whose store branches carry a large,
+        # ever-growing events.jsonl in history (mallcoppro-5b7). The runner
+        # does NOT need full history here: GitMailbox.OpenGitMailbox does its
+        # own explicit git fetch of the mallcop-chat branch before checking
+        # out / creating the mailbox branch, and actions/checkout@v4's
+        # persisted 'origin' credential authorizes that fetch/push.
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Determine pinned-release asset for this runner
+        # Maps the Actions-provided RUNNER_OS/RUNNER_ARCH to the exact asset
+        # name mallcop's release workflow publishes -- mirrors scan.yml's
+        # own platform-detection step exactly.
+        id: platform
+        run: |
+          set -euo pipefail
+          case "${RUNNER_OS}-${RUNNER_ARCH}" in
+            Linux-X64) echo "asset=linux-amd64" >> "$GITHUB_OUTPUT" ;;
+            Linux-ARM64) echo "asset=linux-arm64" >> "$GITHUB_OUTPUT" ;;
+            macOS-ARM64) echo "asset=darwin-arm64" >> "$GITHUB_OUTPUT" ;;
+            *)
+              echo "no published mallcop release asset for ${RUNNER_OS}-${RUNNER_ARCH}" >&2
+              exit 1
+              ;;
+          esac
+
+      - name: Install pinned mallcop release binary
+        env:
+          MALLCOP_ASSET: ${{ steps.platform.outputs.asset }}
+        run: |
+          set -euo pipefail
+          curl -fsSLO "https://github.com/mallcop-app/mallcop/releases/download/${MALLCOP_VERSION}/mallcop-${MALLCOP_ASSET}.tar.gz"
+          curl -fsSLO "https://github.com/mallcop-app/mallcop/releases/download/${MALLCOP_VERSION}/mallcop-${MALLCOP_ASSET}.tar.gz.sha256"
+          sha256sum -c "mallcop-${MALLCOP_ASSET}.tar.gz.sha256"
+          tar -xzf "mallcop-${MALLCOP_ASSET}.tar.gz"
+          echo "$PWD/bin" >> "$GITHUB_PATH"
+
+      - name: Restore findings store from previous runs
+        # Identical pattern to scan.yml: store/ is its own nested git repo
+        # (D3 SAME-REPO), backed by the 'mallcop-findings' branch of this
+        # same deployment repo, restored via an explicit x-access-token URL
+        # because this nested checkout is NOT covered by the top-level
+        # actions/checkout@v4 credential above.
+        run: |
+          set -euo pipefail
+          rm -rf store
+          git clone --quiet --depth 1 --branch "mallcop-findings" --single-branch \
+            "https://x-access-token:${TOKEN}@github.com/${REPO}.git" store \
+            || mkdir -p store
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+
+      - name: Run mallcop investigate --serve
+        # The long-lived session-mailbox loop: reads
+        # sessions/<session_id>/inbox.jsonl and appends
+        # sessions/<session_id>/outbox.jsonl on the 'mallcop-chat' branch
+        # of THIS repo (--repo .), self-exiting on idle timeout or a
+        # control:shutdown record -- see core/investigate/gitmailbox.go.
+        # Inference is metered via MALLCOP_API_KEY (the mallcop-sk repo
+        # secret), same rail as 'mallcop scan'. MALLCOP_API_KEY is scoped to
+        # only THIS step's env (mallcoppro-c32): a job-level env would expose
+        # the inference credential to every other step in this job, including
+        # the third-party actions/checkout@v4 action above.
+        run: |
+          set -euo pipefail
+          mallcop investigate --serve \
+            --session "${SESSION_ID}" \
+            --chat-branch "mallcop-chat" \
+            --chat-remote origin \
+            --repo . \
+            --store ./store
+        env:
+          SESSION_ID: ${{ inputs.session_id }}
+          MALLCOP_API_KEY: ${{ secrets.MALLCOP_API_KEY }}
