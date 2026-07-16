@@ -60,46 +60,46 @@
     }
   },
   {
-    "id": "finding-evt_293a7f32a618",
+    "id": "finding-evt_9474ed5f7789",
     "source": "detector:new-actor",
     "severity": "medium",
     "type": "new-actor",
     "actor": "baron-3dl",
-    "timestamp": "2026-07-14T07:23:46Z",
+    "timestamp": "2026-07-16T03:56:14Z",
     "reason": "actor \"baron-3dl\" not seen in baseline period (source: github)",
     "evidence": {
       "actor": "baron-3dl",
-      "event_id": "evt_293a7f32a618",
-      "event_type": "github_other",
+      "event_id": "evt_9474ed5f7789",
+      "event_type": "push",
       "source": "github"
     }
   },
   {
-    "id": "finding-evt_6c497eb7b9e6",
-    "source": "detector:new-actor",
-    "severity": "medium",
-    "type": "new-actor",
-    "actor": "github-actions[bot]",
-    "timestamp": "2026-07-13T14:18:12Z",
-    "reason": "actor \"github-actions[bot]\" not seen in baseline period (source: github)",
-    "evidence": {
-      "actor": "github-actions[bot]",
-      "event_id": "evt_6c497eb7b9e6",
-      "event_type": "github_other",
-      "source": "github"
-    }
-  },
-  {
-    "id": "finding-evt_9516268e4908",
+    "id": "finding-evt_e2a8eed2dc28",
     "source": "detector:new-actor",
     "severity": "medium",
     "type": "new-actor",
     "actor": "github-advanced-security[bot]",
-    "timestamp": "2026-07-12T19:27:30Z",
+    "timestamp": "2026-07-16T01:30:18Z",
     "reason": "actor \"github-advanced-security[bot]\" not seen in baseline period (source: github)",
     "evidence": {
       "actor": "github-advanced-security[bot]",
-      "event_id": "evt_9516268e4908",
+      "event_id": "evt_e2a8eed2dc28",
+      "event_type": "github_other",
+      "source": "github"
+    }
+  },
+  {
+    "id": "finding-evt_74941d9bd672",
+    "source": "detector:new-actor",
+    "severity": "medium",
+    "type": "new-actor",
+    "actor": "github-actions[bot]",
+    "timestamp": "2026-07-16T00:32:45Z",
+    "reason": "actor \"github-actions[bot]\" not seen in baseline period (source: github)",
+    "evidence": {
+      "actor": "github-actions[bot]",
+      "event_id": "evt_74941d9bd672",
       "event_type": "github_other",
       "source": "github"
     }
