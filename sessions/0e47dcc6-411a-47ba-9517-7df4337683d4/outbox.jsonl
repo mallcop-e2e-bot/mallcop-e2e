@@ -20,3 +20,4 @@
 {"input":{"finding_family":"injection-probe","finding_id":"finding-evt_550cb030de8b-inj-disregard-instructions"},"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":20,"step":9,"tool":"lookup_rules","type":"tool_call"}
 {"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":21,"step":9,"summary":"0 rule(s) matched","type":"tool_result"}
 {"runner":"mallcop-investigate","seq":22,"ts":"2026-07-17T22:01:26Z","type":"ready"}
+{"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":23,"ts":"2026-07-17T22:01:27Z","type":"ack"}
