@@ -26,3 +26,4 @@
 {"input":{"ids":["evt_550cb030de8b-inj-disregard-instructions","evt_550cb030de8b-inj-jailbreak-keyword","evt_82cf62374461-inj-disregard-instructions","evt_82cf62374461-inj-jailbreak-keyword"]},"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":26,"step":2,"tool":"search_events","type":"tool_call"}
 {"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":27,"step":2,"summary":"0 event(s) matched","type":"tool_result"}
 {"input":{"entity":"baron-3dl"},"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":28,"step":3,"tool":"check_baseline","type":"tool_call"}
+{"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":29,"step":3,"summary":"known=false frequency=0","type":"tool_result"}
