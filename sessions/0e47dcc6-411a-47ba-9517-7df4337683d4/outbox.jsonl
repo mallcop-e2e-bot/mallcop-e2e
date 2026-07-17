@@ -17,3 +17,4 @@
 {"input":{"entity":"baron-3dl"},"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":17,"step":8,"tool":"check_baseline","type":"tool_call"}
 {"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":18,"step":8,"summary":"known=false frequency=0","type":"tool_result"}
 {"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","runner":"mallcop-investigate","seq":19,"state":"busy","ts":"2026-07-17T22:01:00Z","type":"heartbeat"}
+{"input":{"finding_family":"injection-probe","finding_id":"finding-evt_550cb030de8b-inj-disregard-instructions"},"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":20,"step":9,"tool":"lookup_rules","type":"tool_call"}
