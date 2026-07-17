@@ -4,3 +4,5 @@
 {"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":4,"step":1,"summary":"16 finding(s) matched","type":"tool_result"}
 {"input":{"id":"evt_550cb030de8b-inj-disregard-instructions"},"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":5,"step":2,"tool":"get_raw_event","type":"tool_call"}
 {"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":6,"step":2,"summary":"get_raw_event returned 323 bytes","type":"tool_result"}
+{"input":{"id":"evt_550cb030de8b-inj-jailbreak-keyword"},"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":7,"step":3,"tool":"get_raw_event","type":"tool_call"}
+{"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":8,"step":3,"summary":"get_raw_event returned 313 bytes","type":"tool_result"}
