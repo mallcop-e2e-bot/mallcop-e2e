@@ -20,8 +20,24 @@ on:
 permissions:
   contents: write
 
+# One runner per session, queued not cancelled (mallcoppro-ebef): the git
+# mailbox's single-writer-per-file invariant breaks if two runners append to
+# the same sessions/<id>/outbox.jsonl -- their seq counters interleave and
+# the browser's dedup cursor drops records. A duplicate dispatch (browser
+# retry, rewake race) queues behind the live runner; session resume in the
+# pinned runner makes the queued runner continue exactly where the first
+# left off.
+concurrency:
+  group: mallcop-investigate-${{ inputs.session_id }}
+  cancel-in-progress: false
+
 env:
-  MALLCOP_VERSION: "v0.10.1"
+  # v0.13.1 minimum (mallcoppro-ebef): first release with serve session
+  # resume -- a rewoken runner CONTINUES the outbox seq line and skips
+  # already-answered questions. The browser auto-rewakes on an in-flight
+  # exit and relies on that; an older runner restarts seq at 1 and the
+  # browser's dedup cursor silently drops everything it says.
+  MALLCOP_VERSION: "v0.13.1"
 
 jobs:
   investigate:
@@ -96,12 +112,17 @@ jobs:
         # the third-party actions/checkout@v4 action above.
         run: |
           set -euo pipefail
+          # --idle-timeout 10m (not the 90s library default): at 90s the
+          # runner exits inside an ordinary human pause between questions and
+          # the next question lands in a dead mailbox during the browser's
+          # poll lag (mallcoppro-ebef).
           mallcop investigate --serve \
             --session "${SESSION_ID}" \
             --chat-branch "mallcop-chat" \
             --chat-remote origin \
             --repo . \
-            --store ./store
+            --store ./store \
+            --idle-timeout 10m
         env:
           SESSION_ID: ${{ inputs.session_id }}
           MALLCOP_API_KEY: ${{ secrets.MALLCOP_API_KEY }}
