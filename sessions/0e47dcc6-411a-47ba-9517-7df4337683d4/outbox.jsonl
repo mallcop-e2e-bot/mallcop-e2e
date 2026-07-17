@@ -56,3 +56,4 @@
 {"runner":"mallcop-investigate","seq":56,"state":"idle","ts":"2026-07-17T22:10:45Z","type":"heartbeat"}
 {"runner":"mallcop-investigate","seq":57,"state":"idle","ts":"2026-07-17T22:11:08Z","type":"heartbeat"}
 {"runner":"mallcop-investigate","seq":58,"state":"idle","ts":"2026-07-17T22:11:30Z","type":"heartbeat"}
+{"reason":"idle","seq":59,"ts":"2026-07-17T22:11:44Z","type":"exit"}
