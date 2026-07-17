@@ -13,3 +13,5 @@
 {"input":{"actor":"baron-3dl"},"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":13,"step":6,"tool":"search_events","type":"tool_call"}
 {"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":14,"step":6,"summary":"2553 event(s) matched","type":"tool_result"}
 {"input":{"ids":["finding-evt_7b8dbe4e6209"]},"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":15,"step":7,"tool":"search_findings","type":"tool_call"}
+{"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":16,"step":7,"summary":"1 finding(s) matched","type":"tool_result"}
+{"input":{"entity":"baron-3dl"},"q":"q_dc9c9151-bb36-44df-884a-abfe1f02a3e3","seq":17,"step":8,"tool":"check_baseline","type":"tool_call"}
