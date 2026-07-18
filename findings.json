@@ -60,31 +60,31 @@
     }
   },
   {
-    "id": "finding-evt_7b8dbe4e6209",
+    "id": "finding-evt_cda2d0b9dc7a",
     "source": "detector:new-actor",
     "severity": "medium",
     "type": "new-actor",
     "actor": "github-actions[bot]",
-    "timestamp": "2026-07-17T00:02:53Z",
+    "timestamp": "2026-07-18T02:06:16Z",
     "reason": "actor \"github-actions[bot]\" not seen in baseline period (source: github)",
     "evidence": {
       "actor": "github-actions[bot]",
-      "event_id": "evt_7b8dbe4e6209",
+      "event_id": "evt_cda2d0b9dc7a",
       "event_type": "github_other",
       "source": "github"
     }
   },
   {
-    "id": "finding-evt_0983c900af45",
+    "id": "finding-evt_067e299158d0",
     "source": "detector:new-actor",
     "severity": "medium",
     "type": "new-actor",
     "actor": "baron-3dl",
-    "timestamp": "2026-07-16T23:06:08Z",
+    "timestamp": "2026-07-18T02:04:51Z",
     "reason": "actor \"baron-3dl\" not seen in baseline period (source: github)",
     "evidence": {
       "actor": "baron-3dl",
-      "event_id": "evt_0983c900af45",
+      "event_id": "evt_067e299158d0",
       "event_type": "github_other",
       "source": "github"
     }
