@@ -1,16 +1,16 @@
 [
   {
-    "id": "finding-evt_48bb29741970",
+    "id": "finding-evt_01943ae24af8",
     "source": "detector:new-actor",
     "severity": "medium",
     "type": "new-actor",
     "actor": "baron-3dl",
-    "timestamp": "2026-07-22T01:17:37Z",
+    "timestamp": "2026-07-22T12:46:45Z",
     "reason": "actor \"baron-3dl\" not seen in baseline period (source: github)",
     "evidence": {
       "actor": "baron-3dl",
-      "event_id": "evt_48bb29741970",
-      "event_type": "github_other",
+      "event_id": "evt_01943ae24af8",
+      "event_type": "push",
       "source": "github"
     }
   },
