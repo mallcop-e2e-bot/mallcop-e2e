@@ -1,5 +1,20 @@
 [
   {
+    "id": "finding-evt_a9cb4f151b91",
+    "source": "detector:new-actor",
+    "severity": "medium",
+    "type": "new-actor",
+    "actor": "baron-3dl",
+    "timestamp": "2026-07-29T03:49:36Z",
+    "reason": "actor \"baron-3dl\" not seen in baseline period (source: github)",
+    "evidence": {
+      "actor": "baron-3dl",
+      "event_id": "evt_a9cb4f151b91",
+      "event_type": "github_other",
+      "source": "github"
+    }
+  },
+  {
     "id": "finding-evt_450e19c8e110",
     "source": "detector:new-actor",
     "severity": "medium",
@@ -10,36 +25,6 @@
     "evidence": {
       "actor": "github-actions[bot]",
       "event_id": "evt_450e19c8e110",
-      "event_type": "github_other",
-      "source": "github"
-    }
-  },
-  {
-    "id": "finding-evt_a3e1e279268d",
-    "source": "detector:new-actor",
-    "severity": "medium",
-    "type": "new-actor",
-    "actor": "baron-3dl",
-    "timestamp": "2026-07-27T17:26:10Z",
-    "reason": "actor \"baron-3dl\" not seen in baseline period (source: github)",
-    "evidence": {
-      "actor": "baron-3dl",
-      "event_id": "evt_a3e1e279268d",
-      "event_type": "github_other",
-      "source": "github"
-    }
-  },
-  {
-    "id": "finding-evt_e2a8eed2dc28",
-    "source": "detector:new-actor",
-    "severity": "medium",
-    "type": "new-actor",
-    "actor": "github-advanced-security[bot]",
-    "timestamp": "2026-07-16T01:30:18Z",
-    "reason": "actor \"github-advanced-security[bot]\" not seen in baseline period (source: github)",
-    "evidence": {
-      "actor": "github-advanced-security[bot]",
-      "event_id": "evt_e2a8eed2dc28",
       "event_type": "github_other",
       "source": "github"
     }
