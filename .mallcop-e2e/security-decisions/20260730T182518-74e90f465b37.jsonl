@@ -1,0 +1,1 @@
+{"op":"security_decision","id":"dec_33042973afbc5819","kind":"approve","status":"pending","target":"rotate the leaked deploy key (live e2e)","blast_radius":"revokes the current key; CI must re-authenticate once","question":"Rotate now?","elevated":false,"raised_by":"chat","raised_at":"2026-07-30T18:25:19Z"}
