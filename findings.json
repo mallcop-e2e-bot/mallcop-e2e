@@ -13,20 +13,5 @@
       "event_type": "github_other",
       "source": "github"
     }
-  },
-  {
-    "id": "finding-evt_450e19c8e110",
-    "source": "detector:new-actor",
-    "severity": "medium",
-    "type": "new-actor",
-    "actor": "github-actions[bot]",
-    "timestamp": "2026-07-27T17:30:34Z",
-    "reason": "actor \"github-actions[bot]\" not seen in baseline period (source: github)",
-    "evidence": {
-      "actor": "github-actions[bot]",
-      "event_id": "evt_450e19c8e110",
-      "event_type": "github_other",
-      "source": "github"
-    }
   }
 ]
