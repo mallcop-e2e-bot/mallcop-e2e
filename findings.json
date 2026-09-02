@@ -1,1 +1,17 @@
-null
+[
+  {
+    "id": "finding-evt_350acfac20f8",
+    "source": "detector:new-actor",
+    "severity": "medium",
+    "type": "new-actor",
+    "actor": "baron-3dl",
+    "timestamp": "2026-09-01T13:56:06Z",
+    "reason": "actor \"baron-3dl\" not seen in baseline period (source: github)",
+    "evidence": {
+      "actor": "baron-3dl",
+      "event_id": "evt_350acfac20f8",
+      "event_type": "push",
+      "source": "github"
+    }
+  }
+]
